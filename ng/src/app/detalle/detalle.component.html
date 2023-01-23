@@ -1,0 +1,21 @@
+<div>
+  <div>
+    <label for="id">Id</label>
+    <input id="id" readonly [(ngModel)]="cliente.id" />
+  </div>
+  <div>
+    <label for="nombre">Nombre</label>
+    <input type="text" id="nombre" [(ngModel)]="cliente.nombre" />
+  </div>
+  <div>
+    <label for="apellidos">Apellidos</label>
+    <input type="text" id="apellidos" [(ngModel)]="cliente.apellidos" />
+  </div>
+  <div>
+    <label for="email">Email</label>
+    <input type="email" id="email" [(ngModel)]="cliente.email" />
+  </div>
+  <div>
+    <button (click)="guardar()">Guardar</button>
+  </div>
+</div>
