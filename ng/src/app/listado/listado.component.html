@@ -9,16 +9,18 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let cliente of clientes">
-      <td>{{cliente.id}}</td>
-      <td>{{cliente.nombre}}</td>
-      <td>{{cliente.apellidos}}</td>
-      <td>{{cliente.email}}</td>
-      <td>
-        <a routerLink="/detalle/{{cliente.id}}">Editar</a>
-        <a routerLink="" (click)="borrar(cliente.id)">Borrar</a>
-      </td>
-    </tr>
+    @for (cliente of clientes; track cliente.id) {
+      <tr>
+        <td>{{cliente.id}}</td>
+        <td>{{cliente.nombre}}</td>
+        <td>{{cliente.apellidos}}</td>
+        <td>{{cliente.email}}</td>
+        <td>
+          <a routerLink="/detalle/{{cliente.id}}">Editar</a>
+          <a routerLink="" (click)="borrar(cliente.id)">Borrar</a>
+        </td>
+      </tr>
+    }
   </tbody>
   <tfoot>
     <tr>
