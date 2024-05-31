@@ -7,7 +7,7 @@ const createWindow = () => {
         height: 600
     });
 
-    win.loadFile('ng/dist/ng/index.html');
+    win.loadFile('ng/dist/ng/browser/index.html');
 };
 
 app.whenReady().then(() => {
