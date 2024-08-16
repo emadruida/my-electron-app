@@ -3,9 +3,12 @@ import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Cliente } from '../cliente';
 import { ClienteService } from '../cliente.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-detalle',
+  standalone: true,
+  imports: [FormsModule],
   templateUrl: './detalle.component.html',
   styleUrls: ['./detalle.component.scss']
 })

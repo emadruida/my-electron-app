@@ -1,9 +1,13 @@
 import { Component, inject, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { Cliente } from '../cliente';
 import { ClienteService } from '../cliente.service';
 
 @Component({
   selector: 'app-listado',
+  standalone: true,
+  imports: [FormsModule, RouterLink],
   templateUrl: './listado.component.html',
   styleUrls: ['./listado.component.scss']
 })
