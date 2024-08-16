@@ -9,7 +9,7 @@
     </tr>
   </thead>
   <tbody>
-    @for (cliente of clientes; track cliente.id) {
+    @for (cliente of clientes(); track cliente.id) {
       <tr>
         <td>{{cliente.id}}</td>
         <td>{{cliente.nombre}}</td>

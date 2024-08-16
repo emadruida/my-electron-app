@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Cliente } from '../cliente';
 import { ClienteService } from '../cliente.service';
@@ -9,21 +9,23 @@ import { ClienteService } from '../cliente.service';
   templateUrl: './detalle.component.html',
   styleUrls: ['./detalle.component.scss']
 })
-export class DetalleComponent implements OnInit {
+export class DetalleComponent {
 
-  cliente: Cliente = {} as Cliente;
+  private clienteService = inject(ClienteService);
+  private route = inject(ActivatedRoute);
+  private location = inject(Location);
 
-  constructor(private clienteService: ClienteService, private route: ActivatedRoute, private location: Location) { }
+  cliente = signal<Cliente>({} as Cliente);
 
-  ngOnInit(): void {
+  constructor() {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.clienteService.getCliente(+id).subscribe(cliente => this.cliente = cliente);
+      this.clienteService.getCliente(+id).subscribe(cliente => this.cliente.set(cliente));
     }
   }
 
   guardar(): void {
-    this.clienteService.guardar(this.cliente).subscribe(_ => this.location.back());
+    this.clienteService.guardar(this.cliente()).subscribe(_ => this.location.back());
   }
 
 }

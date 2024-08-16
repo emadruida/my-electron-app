@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Cliente } from '../cliente';
 import { ClienteService } from '../cliente.service';
 
@@ -7,18 +7,18 @@ import { ClienteService } from '../cliente.service';
   templateUrl: './listado.component.html',
   styleUrls: ['./listado.component.scss']
 })
-export class ListadoComponent implements OnInit {
+export class ListadoComponent {
 
-  clientes: Cliente[] = [];
+  private clienteService = inject(ClienteService);
 
-  constructor(private clienteService: ClienteService) {}
+  clientes = signal<Cliente[]>([]);
 
-  ngOnInit(): void {
+  constructor() {
     this.getClientes();
   }
 
   getClientes(): void {
-    this.clienteService.getAll().subscribe(clientes => this.clientes = clientes);
+    this.clienteService.getAll().subscribe(clientes => this.clientes.set(clientes));
   }
 
   borrar(id: number): void {
