@@ -6,11 +6,10 @@ import { ClienteService } from '../cliente.service';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-detalle',
-  standalone: true,
-  imports: [FormsModule],
-  templateUrl: './detalle.component.html',
-  styleUrls: ['./detalle.component.scss']
+    selector: 'app-detalle',
+    imports: [FormsModule],
+    templateUrl: './detalle.component.html',
+    styleUrls: ['./detalle.component.scss']
 })
 export class DetalleComponent {
 

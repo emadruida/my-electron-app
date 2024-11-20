@@ -5,11 +5,10 @@ import { Cliente } from '../cliente';
 import { ClienteService } from '../cliente.service';
 
 @Component({
-  selector: 'app-listado',
-  standalone: true,
-  imports: [FormsModule, RouterLink],
-  templateUrl: './listado.component.html',
-  styleUrls: ['./listado.component.scss']
+    selector: 'app-listado',
+    imports: [FormsModule, RouterLink],
+    templateUrl: './listado.component.html',
+    styleUrls: ['./listado.component.scss']
 })
 export class ListadoComponent {
 
