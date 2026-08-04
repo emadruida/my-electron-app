@@ -1,5 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ActivatedRoute, provideRouter } from '@angular/router';
+import { of } from 'rxjs';
+import { beforeEach, describe, expect, it } from 'vitest';
 
+import { ClienteService } from '../cliente.service';
 import { DetalleComponent } from './detalle.component';
 
 describe('DetalleComponent', () => {
@@ -8,7 +12,27 @@ describe('DetalleComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DetalleComponent ]
+      imports: [ DetalleComponent ],
+      providers: [
+        provideRouter([]),
+        {
+          provide: ClienteService,
+          useValue: {
+            getCliente: () => of({ id: 1, nombre: 'Juan' }),
+            guardar: () => of({ id: 1, nombre: 'Juan' })
+          }
+        },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            snapshot: {
+              paramMap: {
+                get: (key: string) => key === 'id' ? '1' : null,
+              }
+            }
+          }
+        }
+      ]
     })
     .compileComponents();
 
