@@ -1,41 +1,47 @@
 import { Location } from '@angular/common';
 import {
+  ChangeDetectionStrategy,
   Component,
   inject,
-  signal,
-  ChangeDetectionStrategy,
+  resource
 } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
 import { Cliente } from '../cliente';
 import { ClienteService } from '../cliente.service';
-import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-detalle',
   imports: [FormsModule],
   templateUrl: './detalle.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./detalle.component.scss'],
 })
 export class DetalleComponent {
-  private clienteService = inject(ClienteService);
-  private route = inject(ActivatedRoute);
-  private location = inject(Location);
+  private readonly clienteService = inject(ClienteService);
+  private readonly route = inject(ActivatedRoute);
+  private readonly location = inject(Location);
 
-  cliente = signal<Cliente>({} as Cliente);
+  readonly cliente = resource<Cliente, number | null>({
+    params: () => {
+      const id = this.route.snapshot.paramMap.get('id');
+      return id ? +id : null;
+    },
+    loader: async ({ params }) => {
+      if (!params) {
+        return {} as Cliente;
+      }
 
-  constructor() {
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
-      this.clienteService
-        .getCliente(+id)
-        .subscribe((cliente) => this.cliente.set(cliente));
+      return firstValueFrom(this.clienteService.getCliente(params));
     }
-  }
+  });
 
   guardar(): void {
+    const cliente = this.cliente.value() ?? {} as Cliente;
+
     this.clienteService
-      .guardar(this.cliente())
-      .subscribe((_) => this.location.back());
+      .guardar(cliente)
+      .subscribe(() => this.location.back());
   }
 }

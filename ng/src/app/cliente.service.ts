@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Cliente } from './cliente';
 
@@ -10,7 +10,7 @@ export class ClienteService {
 
   URL = 'http://localhost:3000/clientes/';
 
-  constructor(private http: HttpClient) { }
+  private readonly http = inject(HttpClient);
 
   getAll(): Observable<Cliente[]> {
     return this.http.get<Cliente[]>(this.URL);
